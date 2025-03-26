@@ -1,0 +1,177 @@
+@import "./options.css";
+@import "./custom-options.css";
+
+/* ============================================================================
+   Sidebar Main Container (Collapsed & Expanded States)
+   ============================================================================ */
+#sidebar-main {
+  /* Transition for width and margin on state change */
+  transition: width var(--tweaks-evtoh-animation-duration) ease,
+              margin-inline-end var(--tweaks-evtoh-animation-duration) ease !important;
+
+  /* Ensure full width for tabs */
+  & #tabbrowser-tabs,
+  & .tabbrowser-tab {
+    width: 100% !important;
+  }
+
+  /* ==========================================================================
+     Vertical Pinned Tabs & Arrowscrollbox
+     ========================================================================= */
+  & #vertical-pinned-tabs-container,
+  & #tabbrowser-arrowscrollbox {
+    /* Apply consistent padding, width and margin to tab elements */
+    & .tab-background,
+    & .tab-content,
+    & #tabs-newtab-button {
+      padding: 0 var(--tweaks-evtoh-tab-padding) !important;
+      width: calc(100% - 2 * var(--tweaks-evtoh-tab-margin)) !important;
+      margin: 0 !important;
+    }
+  }
+
+  /* Remove extra padding from vertical pinned tabs container */
+  & #tabbrowser-tabs > #vertical-pinned-tabs-container {
+    padding-inline: 0 !important;
+  }
+
+  /* ==========================================================================
+     Pinned Tabs Vertical Display & Styling
+     ========================================================================= */
+  & #vertical-pinned-tabs-container {
+    /* Calculate inline padding for tab icons */
+    --tab-inline-padding: calc(
+      (var(--tweaks-evtoh-collapsed-width) - var(--icon-size-default)) / 2
+    ) !important;
+
+    /* Display as flex column when not empty */
+    &:not(:empty) {
+      display: flex !important;
+      flex-direction: column !important;
+    }
+
+    /* Remove background color for non-hovered, unselected tabs */
+    & .tab-background {
+      .tabbrowser-tab:not(:hover) > .tab-stack > &:not([selected], [multiselected]) {
+        background-color: transparent !important;
+      }
+    }
+
+    /* Ensure separator between pinned and normal tabs is shown */
+    &:not(:empty) + #vertical-pinned-tabs-container-separator {
+      display: block !important;
+    }
+  }
+
+  /* ==========================================================================
+     Attention Dot Styling on Tabs (Under Icon)
+     ========================================================================= */
+  & .tab-content[titlechanged]:not([selected]) {
+    background-position-x: calc(var(--tweaks-evtoh-tab-padding) + var(--icon-size-default) / 2 - 2px) !important;
+    background-position-y: bottom 2px !important;
+  }
+
+  /* ==========================================================================
+     Animate Tab Internal Elements (Label, Close Button, Toolbar Text)
+     ========================================================================= */
+  & .tab-label-container,
+  & .tab-close-button,
+  & .toolbarbutton-text {
+    transition: opacity var(--tweaks-evtoh-animation-duration) ease,
+                width var(--tweaks-evtoh-animation-duration) ease !important;
+  }
+
+  /* ==========================================================================
+     Blue Line Under Selected Tabs (Tab Context Line)
+     ========================================================================= */
+  & .tab-background {
+    position: relative !important;
+
+    .tab-context-line {
+      position: absolute !important;
+      left: 0 !important;
+      right: 0 !important;
+      bottom: 0 !important;
+      height: 2px !important;
+      margin: 0 !important;
+    }
+  }
+
+  /* ==========================================================================
+     Consistent Height for Tab Group Labels
+     ========================================================================= */
+  & .tab-group-label {
+    margin-block: 0 !important;
+    padding-block: 0 !important;
+    height: var(--tweaks-evtoh-tab-group-label-height) !important;
+    min-height: var(--tweaks-evtoh-tab-group-label-height) !important;
+    width: 100% !important;
+  }
+}
+
+/* ============================================================================
+   Collapsed State Styles (When Sidebar is NOT Hovered)
+   ============================================================================ */
+#sidebar-main:not(:hover) {
+  width: var(--tweaks-evtoh-collapsed-width) !important;
+
+  /* Hide text and buttons when collapsed */
+  & .tab-label-container,
+  & .tab-close-button,
+  & .toolbarbutton-text {
+    display: block !important;
+    width: 0 !important;
+    opacity: 0 !important;
+    padding: 0 !important;
+  }
+}
+
+/* ============================================================================
+   Expanded State Styles (On Hover or Forced Expansion)
+   ============================================================================ */
+#sidebar-main:hover {
+  /* Set expanded width */
+  width: var(--tweaks-evtoh-expanded-width) !important;
+
+  /* Prevent page content from shrinking when expanded */
+  margin-inline-end: calc(var(--tweaks-evtoh-collapsed-width) - var(--tweaks-evtoh-expanded-width)) !important;
+
+  /* Ensure sidebar overlays tab contents */
+  z-index: calc(var(--browser-area-z-index-tabbox) + 1) !important;
+  background-color: var(--toolbox-bgcolor-inactive) !important;
+
+  /* Reveal titles and buttons when expanded */
+  & .tab-label-container,
+  & .tab-close-button,
+  & .toolbarbutton-text {
+    display: inline !important;
+  }
+
+  /* Adjust margin for pinned tab icons */
+  & #vertical-pinned-tabs-container .tab-icon-image {
+    margin-inline-end: var(--tab-icon-end-margin) !important;
+  }
+
+  /* Apply text mask for overflow in tab labels */
+  .tab-label-container[textoverflow] {
+    mask-image: linear-gradient(to left, transparent, black var(--tab-label-mask-size)) !important;
+  }
+
+  /* Position tab group pseudo-element properly */
+  tab-group::before {
+    inset-block-start: calc(var(--tweaks-evtoh-tab-group-label-height) + var(--space-small)) !important;
+  }
+}
+
+/* ============================================================================
+   Additional Overrides
+   ============================================================================ */
+/* Hide the blue line (tab-context-line) completely */
+#sidebar-main .tab-background .tab-context-line {
+  display: none !important;
+}
+
+/* Hide the splitter between the sidebar and the content area */
+#sidebar-launcher-splitter {
+  display: none !important;
+}

@@ -143,7 +143,7 @@ get-profiles() {
 
 # Clone the repository to a temporary directory
 clone-repo() {
-	git clone https://github.com/abrahammurciano/firefox-css-tweaks.git "$1"
+	git clone https://github.com/AliceWektron/firefox-css-tweaks.git "$1"
 }
 
 # Enable a tweak in userChrome.css

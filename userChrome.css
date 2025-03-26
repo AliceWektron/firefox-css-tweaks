@@ -1,2 +1,30 @@
-/* @import "./tweaks/better-active-tab-indicator/index.css"; */
-/* @import "./tweaks/expand-vertical-tabs-on-hover/index.css"; */
+@import url("css/leptonChrome.css");
+@import "./tweaks/better-active-tab-indicator/index.css";
+@import "./tweaks/photon-ui-expand-vertical-tabs-on-hover/index.css";
+@namespace url("http://www.mozilla.org/keymaster/gatekeeper/there.is.only.xul");
+
+#tabbrowser-tabs .tabbrowser-tab:not([pinned]) {
+  border-radius: 0 !important;
+  min-width: 242px !important;
+  max-width: 242px !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  transition: min-width 0.2s ease-in-out, max-width 0.2s ease-in-out !important;
+}
+
+#tabbrowser-tabs .tabbrowser-tab:not([pinned]):hover {
+  min-width: 242px !important;
+  max-width: 242px !important;
+}
+
+#tabs-newtab-button {
+  border-radius: 0 !important;
+  margin: 0 !important;
+  padding: 0 !important;
+  width: auto !important;
+}
+
+#tabs-newtab-button .toolbarbutton-icon {
+  margin: 0 !important;
+  padding: 0 !important;
+}
